@@ -14,9 +14,8 @@ def updateboxes(boxes, boxes_state, keys):
 
 def canUnlockAll(boxes):
     """  a method that determines if all the boxes can be opened """
-    keys = boxes[0]
+    keys = [0]
     boxes_state = ["close" for i in boxes]
-    boxes_state[0] = "open"
     while(True):
         prev_boxes_state = [row[:] for row in boxes_state]
         keys = updateboxes(boxes, boxes_state, keys)
