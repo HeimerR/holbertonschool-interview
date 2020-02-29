@@ -35,9 +35,7 @@ void add(int grid1[3][3], int grid2[3][3])
 	for (i = 0; i < 3; i++)
 	{
 		for (j = 0; j < 3; j++)
-		{
 			grid1[i][j] +=  grid2[i][j];
-		}
 	}
 
 }
@@ -106,20 +104,15 @@ int stable(int grid[3][3])
  */
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
-	int tmp[3][3] = {
-		{0, 0, 0},
-		{0, 0, 0},
-		{0, 0, 0}
-	};
+	int tmp[3][3];
+
 	add(grid1, grid2);
-	printf("=\n");
-	print_grid2(grid1);
 	while (!stable(grid1))
 	{
-		tupple(grid1, tmp);
-		add(grid1, tmp);
 		printf("=\n");
 		print_grid2(grid1);
+		tupple(grid1, tmp);
+		add(grid1, tmp);
 	}
 
 }
