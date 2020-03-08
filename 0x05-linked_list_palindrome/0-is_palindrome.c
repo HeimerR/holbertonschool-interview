@@ -52,19 +52,25 @@ listint_t *clone(listint_t **head)
 int is_palindrome(listint_t **head)
 {
 	listint_t *new;
+	listint_t *tmp;
 	listint_t *current;
 
 	current = *head;
 	if (current == NULL)
 		return (1);
 	new = clone(head);
+	tmp = new;
 	while (current != NULL)
 	{
 		if (new->n != current->n)
+		{
+			free_listint(tmp);
 			return (0);
+		}
 		current = current->next;
 		new = new->next;
 	}
+	free_listint(tmp);
 	return (1);
 }
 
