@@ -22,9 +22,9 @@ int is_palindrome(listint_t **head)
 		array[i++] = current->n;
 		current = current->next;
 	}
-	for (j = 0; j <= (i / 2) + 1; j++)
+	for (j = 0; j < i ; j++)
 	{
-		if (array[j] != array[--i])
+		if (array[j] != array[i - 1 - j])
 			return (0);
 	}
 	return (1);
