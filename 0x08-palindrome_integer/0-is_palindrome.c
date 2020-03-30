@@ -1,4 +1,5 @@
 #include "palindrome.h"
+#include <stdio.h>
 /**
  * is_palindrome - t checks whether or not a given
  * integer is a palindrome
@@ -12,10 +13,11 @@ int is_palindrome(unsigned long n)
 	if (n < 10)
 		return (1);
 
-	while (i < n)
+	while (n >= 10)
+	{
 		i *= 10;
-
-	i /= 10;
+		n = n / 10;
+	}
 
 	while (i > 1)
 	{
