@@ -6,7 +6,7 @@ def validUTF8(data):
     """ determines if a given data set
         represents a valid UTF-8 encoding
     """
-    d  = data
+    d = data
     labels = [False for n in d]
     i = 0
     while i < len(d):
