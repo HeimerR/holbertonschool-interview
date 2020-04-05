@@ -13,11 +13,23 @@ def validUTF8(data):
         if d[i] < 128:
             labels[i] = True
             i += 1
-        elif d[i] & 240 == 224:
-            if (i+3 < len(d)-1):
+        elif d[i] & 248 == 240:
+            if (i+3 <= len(d)-1):
                 labels[i] = True
                 i += 1
                 for n in range(3):
+                    if d[i+n] & 192 == 128:
+                        labels[i+n] = True
+                    else:
+                        break
+                i += 3
+            else:
+                break
+        elif d[i] & 240 == 224:
+            if (i+2 <= len(d)-1):
+                labels[i] = True
+                i += 1
+                for n in range(2):
                     if d[i+n] & 192 == 128:
                         labels[i+n] = True
                     else:
@@ -26,14 +38,11 @@ def validUTF8(data):
             else:
                 break
         elif d[i] & 224 == 192:
-            if (i+2 < len(d)-1):
+            if (i+1 <= len(d)-1):
                 labels[i] = True
                 i += 1
-                for n in range(2):
-                    if d[i+n] & 192 == 128:
-                        labels[i+n] = True
-                    else:
-                        break
+                if d[i] & 192 == 128:
+                    labels[i] = True
                 i += 1
             else:
                 break
