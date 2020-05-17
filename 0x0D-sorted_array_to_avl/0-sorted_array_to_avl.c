@@ -60,7 +60,7 @@ avl_t **array_to_avl(int *array, size_t size, avl_t **root)
 	if (size < 1)
 		return (NULL);
 	bst_insert(root, array[(size - 1) / 2]);
-	array_to_avl(array + (size / 2), size / 2, root);
+	array_to_avl(array + (size + 1) / 2, size / 2, root);
 	array_to_avl(array, size / 2, root);
 	return (root);
 
@@ -80,7 +80,7 @@ avl_t *sorted_array_to_avl(int *array, size_t size)
 		return (NULL);
 	root = NULL;
 	bst_insert(&root, array[(size - 1) / 2]);
-	array_to_avl(array + (size / 2), size / 2, &root);
+	array_to_avl(array + (size + 1) / 2, size / 2, &root);
 	array_to_avl(array, size / 2, &root);
 	return (root);
 }
