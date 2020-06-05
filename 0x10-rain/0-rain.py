@@ -12,7 +12,7 @@ def rain(walls):
         return 0
 
     water = 0
-    while l1 > 3:
+    while l1 >= 3:
         w2 = walls.copy()
         # print("w2", w2)
         w2.sort()
