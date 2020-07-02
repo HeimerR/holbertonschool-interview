@@ -8,11 +8,13 @@ def count_words(subreddit, word_list, hot_list=[], init=0, after="null"):
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     agt = {"User-Agent": "linux:1:v2.1 (by /u/heimer_r)"}
     payload = {"limit": "100", "after": after}
-    word_list = list(set(word_list))
     hot = requests.get(url, headers=agt, params=payload, allow_redirects=False)
+    word_list = list(set(word_list))
     if hot.status_code == 200:
         posts = hot.json().get("data").get("children")
-        hot_list += [post.get("data").get("title") for post in posts]
+        hot_list += [post.get("data").get("title")
+                     for post in posts if post.get("kind") == "t3"]
+        # hot_list += [post.get("data").get("title") for post in posts]
         after = hot.json().get("data").get("after")
         if after is not None:
             count_words(subreddit, word_list, hot_list, 1, after)
