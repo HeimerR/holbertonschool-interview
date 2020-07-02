@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ simple comment """
-from operator import itemgetter
 import requests
 
 
@@ -13,7 +12,8 @@ def count_words(subreddit, word_list, hot_list=[], init=0, after="null"):
     if hot.status_code == 200:
         posts = hot.json().get("data").get("children")
         hot_list += [post.get("data").get("title")
-                     for post in posts if post.get("kind") == "t3"]
+                     for post in posts
+                     if post.get("data").get("title")[0] != "/"]
         # hot_list += [post.get("data").get("title") for post in posts]
         after = hot.json().get("data").get("after")
         if after is not None:
