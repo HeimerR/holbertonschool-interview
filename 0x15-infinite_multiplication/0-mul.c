@@ -170,9 +170,9 @@ void error(void)
  * @lens: array with the length of the numbers 0 first number 1  second number
  * Return: no return
  */
-void check_number(char *argv[], int lens[])
+int check_number(char *argv[], int lens[])
 {
-	int i, j;
+	int i, j, zeros = 0;
 
 	for (j = 2; j >= 1; j--)
 	{
@@ -181,13 +181,19 @@ void check_number(char *argv[], int lens[])
 		{
 			if (argv[j][i] < 48 || argv[j][i] > 57)
 				error();
+			if (argv[j][i] != 48)
+				zeros = 1;
 			i++;
 		}
+		if (zeros == 0)
+			return (1);
+		zeros = 0;
 		if (j == 2)
 			lens[1] = i;
 		else
 			lens[0] = i;
 	}
+	return (0);
 }
 /**
  * main - prints the number of arguments passed into it.
@@ -197,15 +203,16 @@ void check_number(char *argv[], int lens[])
  */
 int main(int argc, char *argv[])
 {
-	int i, lens[2], **sum, *n_1, *n_2;
+	int i, lens[2], **sum, *n_1, *n_2, flag_zeros;
 	int size_h, size_v, level, *answer;
 
 	if (argc != 3)
 		error();
-	check_number(argv, lens);
+	flag_zeros = check_number(argv, lens);
 	size_v = lens[0];
 	size_h = lens[0] + lens[1] + 1;
-	if ((lens[0] == 1 && argv[1][0] == 48) || (lens[1] == 1 && argv[2][0] == 48))
+	if ((lens[0] == 1 && argv[1][0] == 48) ||
+			(lens[1] == 1 && argv[2][0] == 48) || flag_zeros)
 	{ _putchar('0');
 		_putchar(10);
 		return (0); }
