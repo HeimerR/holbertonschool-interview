@@ -20,6 +20,22 @@ void free_grid(int **grid, int height)
 	}
 }
 /**
+ * free_all - free all memory
+ * @sum: double pointer matrix
+ * @size_v: size vertical matrix
+ * @n_1: number 1 to multiply
+ * @n_2: number 2 to multiply
+ * @answer: pointer to answer
+ * Return: no return
+ */
+void free_all(int *sum[], int size_v, int *n_1, int *n_2, int *answer)
+{
+	free_grid(sum, size_v);
+	free(n_1);
+	free(n_2);
+	free(answer);
+}
+/**
  * print_answer - prints the answer.
  * @answer: pointer to the array answer
  * @size_h: size of the answer
@@ -190,34 +206,34 @@ int main(int argc, char *argv[])
 	size_v = lens[0];
 	size_h = lens[0] + lens[1] + 1;
 	if ((lens[0] == 1 && argv[1][0] == 48) || (lens[1] == 1 && argv[2][0] == 48))
-	{
-		_putchar('0');
+	{ _putchar('0');
 		_putchar(10);
-		return (0);
-	}
+		return (0); }
 	sum = malloc((lens[0]) * sizeof(int *));
+	if (sum == NULL)
+		exit(98);
 	for (i = 0; i < size_v; i++)
 		sum[i] = malloc(size_h * sizeof(int));
 	answer = malloc(size_h * sizeof(int));
+	if (answer == NULL)
+		exit(98);
 	n_1 = malloc((lens[0]) * sizeof(int));
+	if (n_1 == NULL)
+		exit(98);
 	n_2 = malloc((lens[1]) * sizeof(int));
+	if (n_2 == NULL)
+		exit(98);
 	to_number(argv[1], lens[0], n_1);
 	to_number(argv[2], lens[1], n_2);
-
 	fill_zeros(sum, size_v, size_h);
-
 	level = lens[0] - 1;
 	while (level >= 0)
 	{
 		mul_line(n_1[level], n_2, lens[1], size_v, sum, lens[0] - level - 1);
 		level--;
 	}
-
 	sum_up(sum, answer, size_h, size_v);
 	print_answer(answer, size_h);
-	free_grid(sum, size_v);
-	free(n_1);
-	free(n_2);
-	free(answer);
+	free_all(sum, size_v, n_1, n_2, answer);
 	return (0);
 }
