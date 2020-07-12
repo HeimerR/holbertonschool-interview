@@ -203,15 +203,15 @@ int check_number(char *argv[], int lens[])
  */
 int main(int argc, char *argv[])
 {
-	int i, lens[2], **sum, *n_1, *n_2, flag_zeros;
+	int i, lens[2], **sum, *n_1, *n_2, zeros;
 	int size_h, size_v, level, *answer;
 
 	if (argc != 3)
 		error();
-	flag_zeros = check_number(argv, lens);
+	zeros = check_number(argv, lens);
 	size_v = lens[0];
 	size_h = lens[0] + lens[1] + 1;
-	if (flag_zeros)
+	if (zeros)
 	{ _putchar('0');
 		_putchar(10);
 		return (0); }

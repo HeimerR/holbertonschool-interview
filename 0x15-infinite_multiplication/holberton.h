@@ -8,5 +8,5 @@ void fill_zeros(int *sum[], int size_v, int size_h);
 void to_number(char argv[], int size, int n[]);
 void mul_line(int n1, int *n2, int size, int size_v, int **sum, int level);
 void error(void);
-void check_number(char *argv[], int lens[]);
+int check_number(char *argv[], int lens[]);
 #endif
