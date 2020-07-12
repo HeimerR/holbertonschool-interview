@@ -211,8 +211,7 @@ int main(int argc, char *argv[])
 	flag_zeros = check_number(argv, lens);
 	size_v = lens[0];
 	size_h = lens[0] + lens[1] + 1;
-	if ((lens[0] == 1 && argv[1][0] == 48) ||
-			(lens[1] == 1 && argv[2][0] == 48) || flag_zeros)
+	if (flag_zeros)
 	{ _putchar('0');
 		_putchar(10);
 		return (0); }
