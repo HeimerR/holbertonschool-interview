@@ -13,7 +13,7 @@ def makeChange(coins, total):
     i = 0
     counter = 0
     num_coins = len(coins)
-    while sum < total and i < num_coins - 1:
+    while sum < total and i < num_coins:
         while coins[i] <= total - sum:
             sum += coins[i]
             counter += 1
