@@ -6,7 +6,8 @@ List *first_node(List **list, char *str)
 	new = malloc(sizeof(List));
 	if (new == NULL)
 		return (NULL);
-	new->str = str;
+	new->str = strdup(str);
+	free(str);
 	new->next = new;
 	new->prev = new;
 	*list = new;
@@ -31,7 +32,8 @@ List *add_node_end(List **list, char *str)
 	new = malloc(sizeof(List));
 	if (new == NULL)
 		return (NULL);
-	new->str = str;
+	new->str = strdup(str);
+	free(str);
 	new->next = aux;
 	new->prev = aux->prev;
 	tmp = aux->prev;
@@ -59,7 +61,8 @@ List *add_node_begin(List **list, char *str)
 	new = malloc(sizeof(List));
 	if (new == NULL)
 		return (NULL);
-	new->str = str;
+	new->str = strdup(str);
+	free(str);
 	new->next = aux;
 	new->prev = aux->prev;
 	tmp = aux->prev;
