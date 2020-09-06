@@ -76,6 +76,8 @@ void radix_sort(int *array, size_t size)
 	int **tmp, flag = 1, level = 1;
 	size_t i;
 
+	if (!array || size < 2)
+		return;
 	tmp = malloc(sizeof(int *) * 10);
 	for (i = 0; i < 10; i++)
 		tmp[i] = malloc(sizeof(int) * size);
