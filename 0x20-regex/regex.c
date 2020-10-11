@@ -7,40 +7,8 @@
  */
 int regex_match(char const *str, char const *pattern)
 {
-	int i, j, flag;
-	char s, p;
+	int ret;
 
-	i = 0;
-	j = i;
-	flag = 0;
-	while (str[j])
-	{
-		s = str[j];
-		p = pattern[i];
-		if (s == p || p == '.')
-		{
-			i++;
-			j++;
-		}
-		if (pattern[i + 1] == '*' && p != '*')
-		{
-			flag = 1;
-		}
-		if (pattern[i - 1] == '*' && p != '*')
-		{
-			flag = 0;
-
-		}
-		if (p == '*')
-			i++;
-		if (s != p)
-		{
-			if (flag == 0)
-				return (0);
-
-		}
-		j++;
-	}
-	return (1);
+	ret = strcmp(str, pattern);
+	return (ret);
 }
-
