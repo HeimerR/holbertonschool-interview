@@ -7,8 +7,24 @@
  */
 int regex_match(char const *str, char const *pattern)
 {
-	int ret;
+	int j = 0;
 
-	ret = strcmp(str, pattern);
-	return (ret);
+	if (!strcmp(str, pattern))
+		return (1);
+	if (!strchr(pattern, '.') && !strchr(pattern, '*'))
+		return (0);
+	if (strchr(pattern, '.') && !strchr(pattern, '*'))
+	{
+		while (str[j])
+		{
+			if (str[j] == pattern[j] ||  pattern[j] == '.')
+				j++;
+			else
+				return (0);
+		}
+		return (1);
+	}
+	if (pattern[0] == '.' && pattern[1] == '*' && pattern[2] == '\n')
+		return (1);
+	return (1);
 }
