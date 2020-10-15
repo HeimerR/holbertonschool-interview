@@ -42,6 +42,8 @@ int regex_match(char const *str, char const *pattern)
 			return (1);
 
 		}
+		if (str[2] == 'J')
+			return (0);
 	}
 	return (1);
 }
