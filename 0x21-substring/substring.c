@@ -41,6 +41,8 @@ int *search(char const *s, char const **words, int nb_words)
 	int len;
 
 	aux_indx = malloc((sizeof(int) * nb_words));
+	if (!aux_indx)
+		return (NULL);
 	for (i = 0; i < nb_words; i++)
 	{
 		aux = strstr(s, words[i]);
@@ -57,7 +59,7 @@ int *search(char const *s, char const **words, int nb_words)
 			/*printf("len: %i, aux[%i]%i\n:", len, j, aux_indx[j]);*/
 			if (len == aux_indx[j])
 			{
-				aux = strstr(s + strlen(s) - len + 1, words[i]);
+				aux = strstr(s + (int)strlen(s) - len + 1, words[i]);
 				if (!aux)
 				{
 					free(aux_indx);
@@ -88,10 +90,12 @@ int *find_substring(char const *s, char const **words, int nb_words, int *n)
 {
 	int *indx, *aux_indx, wordlen, j, f_indx, diff, s_len, *indx_final;
 
-	indx = malloc((sizeof(int)) * strlen(s));
+	indx = malloc((sizeof(int)) * (int)strlen(s));
+	if (!indx)
+		return (NULL);
 	*n = 0;
 
-	wordlen = strlen(words[0]);
+	wordlen = (int)strlen(words[0]);
 	s_len = (int)strlen(s);
 	for (j = 0; j < s_len; j++)
 	{
@@ -105,7 +109,7 @@ int *find_substring(char const *s, char const **words, int nb_words, int *n)
 		free(aux_indx);
 		if (f_indx)
 		{
-			diff = strlen(s) - f_indx + j;
+			diff = (int)(strlen(s) - f_indx + j);
 			/*printf("diff %i\n", diff);*/
 			if (diff != indx[*n - 1] || *n == 0)
 			{
