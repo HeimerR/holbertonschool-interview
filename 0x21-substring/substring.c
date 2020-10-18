@@ -1,4 +1,5 @@
 #include "substring.h"
+#include <stdbool.h>
 /**
  * cmpfunc - compare tow values
  * @a: first value
@@ -25,7 +26,7 @@ int check(int *aux_indx, int wordlen, int idx_len)
 		if (aux_indx[i + 1] - aux_indx[i]  != wordlen)
 			return (0);
 	}
-	return (aux_indx[idx_len - 1]);
+	return (1);
 }
 /**
  * search - search words in string
@@ -88,40 +89,44 @@ int *search(char const *s, char const **words, int nb_words)
  **/
 int *find_substring(char const *s, char const **words, int nb_words, int *n)
 {
-	int *indx, *aux_indx, wordlen, j, f_indx, diff, s_len, *indx_final;
+	int *indx, *aux_indx, wordlen, j, diff, s_len, f_indx, tmp, n2;
+	/*int indx[100000];*/
 
-	indx = malloc((sizeof(int)) * (int)strlen(s));
-	if (!indx)
-		return (NULL);
-	*n = 0;
+	n2 = 0;
 
 	wordlen = (int)strlen(words[0]);
 	s_len = (int)strlen(s);
 	for (j = 0; j < s_len; j++)
 	{
 		aux_indx = search(s, words, nb_words);
-		if (!aux_indx && *n == 0)
-			return (NULL);
 		if (!aux_indx)
 			break;
 		qsort(aux_indx, nb_words, sizeof(int), cmpfunc);
 		f_indx = check(aux_indx, wordlen, nb_words);
+		tmp = aux_indx[nb_words - 1];
 		free(aux_indx);
-		if (f_indx)
+		if (f_indx == 1)
 		{
-			diff = (int)(strlen(s) - f_indx + j);
+			diff = s_len - tmp;
 			/*printf("diff %i\n", diff);*/
-			if (diff != indx[*n - 1] || *n == 0)
+			if (n2 == 0 || diff != indx[n2 - 1])
 			{
-				indx[*n] = diff;
-				*n += 1;
+				if (n2 == 0)
+				{
+					indx = malloc((sizeof(int)));
+					if (!indx)
+						return (NULL);
+				}
+				else
+					indx = realloc(indx, sizeof(int) * (n2 + 1));
+				indx[n2] = diff;
+				n2++;
 			}
 		}
 		s++;
 	}
-	indx_final = malloc((sizeof(int)) * (*n));
-	for (j = 0; j < *n; j++)
-		indx_final[j] = indx[j];
-	free(indx);
-	return (indx_final);
+	*n = n2;
+	if (*n == 0)
+		return (NULL);
+	return (indx);
 }
