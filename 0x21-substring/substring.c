@@ -108,5 +108,6 @@ int *find_substring(char const *s, char const **words, int nb_words, int *n)
 		}
 		s++;
 	}
-	return (indx);
+	*n = 0;
+	return (NULL);
 }
