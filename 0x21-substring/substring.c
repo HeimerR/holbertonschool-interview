@@ -1,5 +1,4 @@
 #include "substring.h"
-#include <stdbool.h>
 /**
  * cmpfunc - compare tow values
  * @a: first value
@@ -33,7 +32,7 @@ int check(int *aux_indx, int wordlen, int idx_len)
  * @s: string base
  * @words: array of words to searh in the string
  * @nb_words: number of words
- * Return: array with index for every word or NULL
+ * Return: array with size of substring (strstr return) for every word or NULL
  **/
 int *search(char const *s, char const **words, int nb_words)
 {
@@ -53,11 +52,8 @@ int *search(char const *s, char const **words, int nb_words)
 			return (NULL);
 		}
 		len = (int)strlen(aux);
-		/*printf("holas\n");*/
-		/*printf("sublen: %d\n", len);*/
 		for (j = 0; j < i; j++)
 		{
-			/*printf("len: %i, aux[%i]%i\n:", len, j, aux_indx[j]);*/
 			if (len == aux_indx[j])
 			{
 				aux = strstr(s + (int)strlen(s) - len + 1, words[i]);
@@ -89,43 +85,43 @@ int *search(char const *s, char const **words, int nb_words)
  **/
 int *find_substring(char const *s, char const **words, int nb_words, int *n)
 {
-	int *indx, *aux_indx, wordlen, j, diff, s_len, f_indx, tmp, n2;
-	/*int indx[100000];*/
+	int *indx, *aux_indx, wordlen, j, diff, s_len, f_indx, tmp;
 
-	n2 = 0;
-
+	*n = 0;
 	wordlen = (int)strlen(words[0]);
 	s_len = (int)strlen(s);
 	for (j = 0; j < s_len; j++)
 	{
+		/*strstr for every word*/
 		aux_indx = search(s, words, nb_words);
 		if (!aux_indx)
 			break;
+		/* sort size of substrings */
 		qsort(aux_indx, nb_words, sizeof(int), cmpfunc);
+		/* are the words next each other? */
 		f_indx = check(aux_indx, wordlen, nb_words);
 		tmp = aux_indx[nb_words - 1];
 		free(aux_indx);
+		/* if a valid substring was found*/
 		if (f_indx == 1)
 		{
 			diff = s_len - tmp;
-			/*printf("diff %i\n", diff);*/
-			if (n2 == 0 || diff != indx[n2 - 1])
+			if (*n == 0 || diff != indx[*n - 1])
 			{
-				if (n2 == 0)
+				if (*n == 0)
 				{
 					indx = malloc((sizeof(int)));
 					if (!indx)
 						return (NULL);
 				}
 				else
-					indx = realloc(indx, sizeof(int) * (n2 + 1));
-				indx[n2] = diff;
-				n2++;
+					indx = realloc(indx, sizeof(int) * (*n + 1));
+				indx[*n] = diff;
+				*n += 1;
 			}
 		}
 		s++;
 	}
-	*n = n2;
 	if (*n == 0)
 		return (NULL);
 	return (indx);
