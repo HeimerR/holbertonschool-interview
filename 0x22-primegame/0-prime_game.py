@@ -25,28 +25,39 @@ def isWinner(x, nums):
     """
     nums.sort()
     winner = False
-    for turn in range(x):
-        """
-        # uncomment to monitor turns
-        if turn % 2 != 0:
-            print("Ben turn {}/{}".format(turn+1, 2*x))
-        else:
-            print("Maria turn {}/{}".format(turn+1, 2*x))
-        """
-        change = False
-        for i, n in enumerate(nums):
-            # print("n: ", n, "i: ", i)
-            if n > 1 and isprime(n):
-                delete_numbers(n, nums)
-                change = True
-                # print(nums)
+    Maria = 0
+    Ben = 0
+    for game in range(x):
+        # print("game# ", game+1)
+        nums2 = nums.copy()[:game+1]
+        # print("nums: ", nums2)
+        turn = 0
+        while True:
+            """
+            # uncomment to monitor turns
+            if turn % 2 != 0:
+                print("Ben turn ")
+            else:
+                print("Maria turn ")
+            """
+            change = False
+            for i, n in enumerate(nums2):
+                # print("n: ", n, "i: ", i)
+                if n > 1 and isprime(n):
+                    delete_numbers(n, nums2)
+                    change = True
+                    turn += 1
+                    break
+            # print("movement: ", nums2)
+            if change is False:
                 break
-        if change is False:
-            winner = True
-            # print(nums)
-            break
-    if winner is False:
+        if turn % 2 != 0:
+            Maria += 1
+        else:
+            Ben += 1
+        # print("Maria: {}, Ben: {}".format(Maria, Ben))
+    if Maria == Ben:
         return None
-    if turn % 2 != 0:
+    if Maria > Ben:
         return "Maria"
     return "Ben"
