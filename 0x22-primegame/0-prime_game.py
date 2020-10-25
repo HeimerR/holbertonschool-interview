@@ -48,5 +48,5 @@ def isWinner(x, nums):
     if winner is False:
         return None
     if turn % 2 != 0:
-        return "Maria"
-    return "Ben"
+        return "Ben"
+    return "Maria"
