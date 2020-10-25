@@ -25,7 +25,7 @@ def isWinner(x, nums):
     """
     nums.sort()
     winner = False
-    for turn in range(2 * x):
+    for turn in range(x):
         """
         # uncomment to monitor turns
         if turn % 2 != 0:
